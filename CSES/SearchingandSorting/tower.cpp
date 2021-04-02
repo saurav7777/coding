@@ -24,5 +24,24 @@ void init_code(){
 int main() {
    init_code();
    
-   return 0;
+    int n;
+   cin>>n;
+
+   vector<int>towers;
+   int box;
+   for(int i=0;i<n;i++){
+      cin>>box;
+      if(towers.empty()) {
+        towers.pb(box);
+        continue;
+      }
+      int index = upper_bound(towers.begin(),towers.end(),box)-towers.begin();
+      if(index == towers.size()){
+        towers.pb(box);
+      }else{
+        towers[index]=box;
+      }
+   }
+    cout<<towers.size();
+    return 0;
 }

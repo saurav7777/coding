@@ -22,7 +22,31 @@ void init_code(){
 }
  
 int main() {
-   init_code();
-   
+   // init_code();
+   int n,x;
+   cin>>x>>n;
+   vector<int>p(n,0);
+   fr(0,n) cin>>p[i];
+
+   set<int> d={x};
+   unordered_map<int,int>mp;
+   mp[x]=1;
+   set<int> up={0,x};
+   set<int> lo={-x,0};
+
+
+   fr(0,n){
+   		int y=p[i];
+   		int a = *up.upper_bound(y);
+        int b = -*lo.upper_bound(-y);
+        up.insert(y); lo.insert(-y);
+        mp[a-b]--;
+        if (mp[a-b]==0){
+            d.erase(a-b);
+        }
+        d.insert(a-y),d.insert(y-b);
+        mp[a-y]++, mp[y-b]++;
+        cout<<(*d.rbegin())<<" ";
+   }
    return 0;
 }
