@@ -14,7 +14,7 @@
 using namespace std;
  
 void init_code(){
-    fast_io;
+    // fast_io;
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
@@ -22,7 +22,36 @@ void init_code(){
 }
  
 int main() {
+	 fast_io;
     init_code();
-   
+
+   	int n,sum;
+   	cin>>n>>sum;
+   	map<ll, int> prevSum;
+   	// vector<ll>arr(n,0);
+   	// for(int i=0;i<n;i++){
+   	// 	cin>>arr[i];
+   	// }
+  
+   	ll res = 0;
+ 
+    // Sum of elements so far.
+    ll currsum = 0;
+ 	prevSum[0]=1;
+    for (int i = 0; i < n; i++) {
+ 		ll num;
+ 		cin>>num;
+        currsum += num;
+ 
+        // if (currsum == sum)
+        //     res++;
+
+        if (prevSum.find(currsum - sum) != prevSum.end())
+            res += (prevSum[currsum - sum]);
+ 
+        prevSum[currsum]++;
+    }
+ 	
+ 	cout<<res;
     return 0;
 }

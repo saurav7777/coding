@@ -32,32 +32,61 @@ bool comp(pair<int,bool>a,pair<int,bool>b){
 }
 
 int main() {
-   // init_code();
-    int n,k;
-    cin>>n>>k;
-    int tt=k;
-    vector<pair<int,bool>> v;
-    int x; int y;
-    while(n--){
-    	cin>>x;cin>>y;
-    	v.push_back(make_pair(x,true));
-    	v.push_back(make_pair(y,false));
+    init_code();
+    ll T=1;
+    //cin>>T;
+    while(T--){
+       vector<pair<ll,ll>> v;
+       ll n,k;
+       cin>>n>>k;
+       for(ll i=0;i<n;i++){
+          ll a,c;
+          cin>>a>>c;
+          // pushing end time, start time
+          v.push_back({c,a});
+       }
+       sort(v.begin(),v.end());
+       multiset<ll,greater<ll>>st;
+
+       // for(auto x:v) cout<<x.second<<"->"<<x.first<<"\n";
+       // ll curr=v[0].first;
+       ll ans=0;
+       for(ll i=0;i<n;i++){
+
+           ll arr=v[i].second;
+            // ll largest_dep = *st.begin();
+            auto largest_dep = st.lower_bound(arr);
+
+            if(largest_dep!=st.end() && (arr>= *largest_dep)){
+                // cout<<"erase->"<<*largest_dep<<" "<<arr<<"\n";
+                st.erase(largest_dep);
+                st.insert(v[i].first);
+                ans++;
+            }else {
+                if((st.size()<k)){
+                  st.insert(v[i].first);
+                  ans++;
+               }
+            }
+
+           // if(st.size()<k){
+           //    st.insert(v[i].first);
+           //    ans++;
+           // }else{
+           //    ll arr=v[i].second;
+           //    // ll largest_dep = *st.begin();
+           //    auto largest_dep = st.lower_bound(arr);
+
+           //    if(largest_dep!=st.end() && (arr>= *largest_dep)){
+           //        cout<<"erase->"<<*largest_dep<<" "<<arr<<"\n";
+           //        st.erase(largest_dep);
+           //        st.insert(v[i].first);
+           //        ans++;
+           //    }
+           // }
+           // cout<<*st.begin()<<" ";
+       }
+       cout<<ans<<"\n";
     }
-   	sort(v.begin(),v.end(),comp);
-   	int ans =0; int maxx =0;
-   	for(int i=0;i<v.size();i++){
-   		if(v[i].second==true){
-   			if(k){
-          ans++;
-          k--;
-        }
-   			// maxx = max(ans,maxx);
-   		}else{
-   			//ans--;
-        if(k<tt)
-          k++;
-   		}
-   	}
-   	cout<<ans<<endl;
    return 0;
 }

@@ -13,6 +13,37 @@
 #define read(x) int x; cin >> x
 using namespace std;
  
+ll n,k,sum;
+vector<ll>arr;
+
+bool check(ll mid){
+	ll count=0,temp=0;
+	fr(0,n){
+		if(arr[i]>mid) return false;
+		temp+=arr[i];
+		if(temp>mid){
+			count++;
+			temp=arr[i];
+		}
+		if(count>=k) return false;
+	}
+	return true;
+}
+
+ll arrayDivision(ll start ,ll end){
+	ll ans=0,mid=0;
+	while(start<=end){
+		mid=(start+end)/2;
+		if(check(mid)){
+			ans=mid;
+			end=mid-1;
+		}else{
+			start=mid+1;
+		}
+	}
+	return ans;
+}
+
 void init_code(){
     fast_io;
 #ifndef ONLINE_JUDGE
@@ -22,7 +53,16 @@ void init_code(){
 }
  
 int main() {
-    init_code();
-   
+    // init_code();
+   	
+   	cin>>n>>k;
+   	fr(0,n){
+   		ll num;
+   		cin>>num;
+   		arr.push_back(num);
+   		sum+=num;
+   	}
+
+   	cout<<arrayDivision(0,sum);
     return 0;
 }
